@@ -9,3 +9,6 @@ Screenshots:
 |![enter image description here](https://i.imgur.com/k9yCUS7.png) | ![enter image description here](https://i.imgur.com/zkTERtz.png)| ![enter image description here](https://i.imgur.com/rMIciO4.png)|:-------------------------:|:-------------------------:|:-------------------------:|
 |![enter image description here](https://i.imgur.com/CsAaiyF.png)|![enter image description here](https://i.imgur.com/8hm2Bjb.png)|![enter image description here](https://i.imgur.com/housWPi.png)|
 |![enter image description here](https://i.imgur.com/DsppkEY.png)
+
+
+**Checkout the whole Mockup here** https://www.behance.net/gallery/78678787/FittSet-UIUX-Project
