@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="AppThemeDashboard" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorDashboardPrimary</item>
+        <item name="colorPrimaryDark">@color/colorDashboardDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    </style>
+
+
+    <style name="AppThemeInputForm" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
+        <item name="colorControlNormal">@android:color/white</item>
+
+
+
+    </style>
+
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
+        <!-- Customize your theme here. -->
+        <!--<item name="android:textColor">@color/colorDashboardTitle</item>-->
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppThemeAllEx" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <!--<item name="android:homeAsUpIndicator">@drawable/ic_action_uparrow</item>-->
+
+    </style>
+
+    <!--Fancy Input Form-->
+    <style name="EditTextHeadline" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textColorHint">#88ffffff</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+
+    <style name="EditTextSubhead" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textColorHint">#77ffffff</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+
+    <!--TEST OVERFLOW icon change color-->
+
+
+    <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">#ffffff</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabIndicatorHeight">5dp</item>
+        <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/colorDashboardPrimary</item>
+        <item name="tabMaxWidth">300dp</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+
+    </style>
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#e7e7e7</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+
+
+
+</resources>

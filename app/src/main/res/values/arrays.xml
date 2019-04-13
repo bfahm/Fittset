@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="muscle_groups">
+        <item>Unspecified</item>
+        <item>Chest</item>
+        <item>Shoulders</item>
+        <item>Back</item>
+        <item>Biceps</item>
+        <item>Triceps</item>
+        <item>Legs</item>
+        <item>Abs</item>
+    </string-array>
+</resources>

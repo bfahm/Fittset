@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search_button"
+        android:title="Search Exercises"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:icon="@drawable/ic_allex_search"/>
+    <item
+        android:id="@+id/action_allex_settings"
+        android:title="Settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_allex_dummy_chest"
+        android:title="Dummy Chest Exercise"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_allex_dummy_shoulders"
+        android:title="Dummy Shoulders Exercise"
+        app:showAsAction="never"/>
+
+
+</menu>

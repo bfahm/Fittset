@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_routines"
+            android:title="Routines"
+            android:icon="@drawable/ic_nav_routines"/>
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:title="Notifications"
+            android:icon="@drawable/ic_nav_notifications"/>
+        <item
+            android:id="@+id/nav_history"
+            android:title="Workout History"
+            android:icon="@drawable/ic_nav_history"/>
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings"
+            android:icon="@drawable/ic_nav_settings"/>
+        <item
+            android:id="@+id/nav_about"
+            android:title="About the developer"
+            android:icon="@drawable/ic_nav_about"/>
+    </group>
+</menu>
