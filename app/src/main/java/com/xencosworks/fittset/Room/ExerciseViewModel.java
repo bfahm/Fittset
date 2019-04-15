@@ -9,13 +9,11 @@ import java.util.List;
 
 public class ExerciseViewModel extends AndroidViewModel {
     private ExerciseRepository exerciseRepository;
-    private LiveData<List<Exercise>> allExercises;
 
 
     public ExerciseViewModel(@NonNull Application application) {
         super(application);
         exerciseRepository = new ExerciseRepository(application);
-        allExercises = exerciseRepository.getAllExercises();
     }
 
     public void insert(Exercise exercise){
@@ -35,6 +33,10 @@ public class ExerciseViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Exercise>> getAllExercises(){
-        return allExercises;
+        return exerciseRepository.getAllExercises();
+    }
+
+    public LiveData<List<Exercise>> getExercisesByGroup(int muscleGroup){
+        return exerciseRepository.getExercisesByGroup(muscleGroup);
     }
 }

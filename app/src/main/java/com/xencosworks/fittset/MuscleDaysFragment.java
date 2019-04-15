@@ -1,18 +1,28 @@
 package com.xencosworks.fittset;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xencosworks.fittset.Room.Exercise;
+import com.xencosworks.fittset.Room.ExerciseViewModel;
+
+import java.util.List;
+
 
 public class MuscleDaysFragment extends Fragment{
     private static String LOGTAG = MuscleDaysFragment.class.getSimpleName();
     private View rootView;
+
+    private ExerciseViewModel exerciseViewModel;
 
     private TextView chestCount;
     private TextView shouldersCount;
@@ -21,25 +31,6 @@ public class MuscleDaysFragment extends Fragment{
     private TextView triCount;
     private TextView legsCount;
     private TextView absCount;
-
-    private int iChest;
-    private int iShoulders;
-    private int iBack;
-    private int iBi;
-    private int iTri;
-    private int iLegs;
-    private int iAbs;
-
-    private String sChest = "No exercises yet";
-    private String sShoulders = "No exercises yet";
-    private String sBack = "No exercises yet";
-    private String sBiceps = "No exercises yet";
-    private String sTriceps = "No exercises yet";
-    private String sLegs = "No exercises yet";
-    private String sAbs = "No exercises yet";
-
-    private String[] sArray = {sChest, sShoulders, sBack, sBiceps, sTriceps, sLegs, sAbs};
-    private int[] iArray = {iChest, iShoulders, iBack, iBi, iTri, iLegs, iAbs};
 
 
     public MuscleDaysFragment() {
@@ -56,6 +47,9 @@ public class MuscleDaysFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+
         chestCount = view.findViewById(R.id.muscle_days_chest_count);
         shouldersCount = view.findViewById(R.id.muscle_days_shoulders_count);
         backCount = view.findViewById(R.id.muscle_days_back_count);
@@ -64,41 +58,38 @@ public class MuscleDaysFragment extends Fragment{
         legsCount = view.findViewById(R.id.muscle_days_legs_count);
         absCount = view.findViewById(R.id.muscle_days_abs_count);
 
-        inflateCountingData();
+        exerciseViewModel.getAllExercises().observe(this, new Observer<List<Exercise>>() {
+            @Override
+            public void onChanged(@Nullable List<Exercise> exercises) {
+                if(exercises.size()>0){
+                    Log.v(LOGTAG, "ENTERED TO COUNTING");
+                    countExercises();
+                }
+            }
+        });
     }
 
-    private void inflateCountingData(){
-        iArray = new int[]{iChest, iShoulders, iBack, iBi, iTri, iLegs, iAbs};
-        int codeCounter = 0;
-        for(int i=0; i<7; i++){
-            if(iArray[i]!=0) {
-                //TODO: Apply the right string layout.
-                sArray[i] = iArray[i] + " Exercises";
-            }else {
-                codeCounter+=1;
-            }
-        }
-        int codeNoDataYet = -1;
-        if (codeCounter==7){
-            codeNoDataYet =1;
-        }else{
-            codeNoDataYet =0;
+
+    private void countExercises() {
+        final TextView[] tvArray = {chestCount, shouldersCount, backCount, biCount, triCount, legsCount, absCount};
+        for(int i = 0; i<7; i++){
+            final int index = i;
+            // using index+1 in the muscle group to skip counting the unknown group (which doesn't have a textview)
+            exerciseViewModel.getExercisesByGroup(index+1).observe(this, new Observer<List<Exercise>>() {
+                @Override
+                public void onChanged(@Nullable List<Exercise> exercises) {
+                    int numberOfExercises = exercises.size();
+                    if(numberOfExercises>0){
+                        tvArray[index].setVisibility(View.VISIBLE);
+                        tvArray[index].setText(numberOfExercises + " Exercises");
+                    }else {
+                        tvArray[index].setVisibility(View.VISIBLE);
+                        tvArray[index].setText("No exercises yet.");
+                    }
+                }
+            });
         }
 
-        TextView[] tvArray = {chestCount, shouldersCount, backCount, biCount, triCount, legsCount, absCount};
-
-        if(codeNoDataYet ==1){
-            for(int i=0; i<7; i++){
-                tvArray[i].setVisibility(View.GONE);
-            }
-        }else {
-            for(int i=0; i<7; i++){
-                tvArray[i].setVisibility(View.VISIBLE);
-            }
-        }
-        for(int i=0; i<7; i++){
-            tvArray[i].setText(sArray[i]);
-        }
     }
 
 

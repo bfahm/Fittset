@@ -12,13 +12,10 @@ import java.util.List;
 
 public class ExerciseRepository {
     private ExerciseDao exerciseDao;
-    private LiveData<List<Exercise>> allExercises;
 
     public ExerciseRepository(Application application){
         MainDatabase mainDatabase = MainDatabase.getInstance(application);
         exerciseDao = mainDatabase.exerciseDao();
-        //TODO: handle custom fetching
-        allExercises = exerciseDao.getAllExercises();
     }
 
     public void insert(Exercise exercise){
@@ -41,8 +38,14 @@ public class ExerciseRepository {
         //LiveData returnable handle background activities automatically when READING from
         //the application's database, on the other hand, other CRUD operations need background
         //handling.
-        return allExercises;
+        return exerciseDao.getAllExercises();
     }
+
+    public LiveData<List<Exercise>> getExercisesByGroup(int muscleGroup){
+        return exerciseDao.getAllExercisesOfGroup(muscleGroup);
+    }
+
+
 
     private static class InsertExerciseAsyncTask extends AsyncTask<Exercise, Void, Void>{
         private ExerciseDao exerciseDao;

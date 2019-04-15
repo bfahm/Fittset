@@ -1,5 +1,6 @@
 package com.xencosworks.fittset;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
@@ -7,11 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.xencosworks.fittset.Room.Exercise;
+import com.xencosworks.fittset.Room.ExerciseRepository;
 import com.xencosworks.fittset.Room.ExerciseViewModel;
+import com.xencosworks.fittset.Room.MainDatabase;
 import com.xencosworks.fittset.helpers.ExerciseRecyclerViewAdapter;
 
+import java.security.cert.Extension;
 import java.util.List;
 
 public class Test extends AppCompatActivity {
@@ -37,5 +42,6 @@ public class Test extends AppCompatActivity {
                 adapter.setExercise(exercises);
             }
         });
+
     }
 }

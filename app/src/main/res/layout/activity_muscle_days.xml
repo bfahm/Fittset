@@ -60,7 +60,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_chest_count"/>
+                        android:id="@+id/muscle_days_chest_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -236,7 +237,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_shoulders_count"/>
+                        android:id="@+id/muscle_days_shoulders_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -411,7 +413,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_back_count"/>
+                        android:id="@+id/muscle_days_back_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -586,7 +589,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_bi_count"/>
+                        android:id="@+id/muscle_days_bi_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -761,7 +765,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_tri_count"/>
+                        android:id="@+id/muscle_days_tri_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -936,7 +941,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_legs_count"/>
+                        android:id="@+id/muscle_days_legs_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -1111,7 +1117,8 @@
                         android:text="No exercises yet"
                         android:textColor="@android:color/white"
                         android:textSize="12dp"
-                        android:id="@+id/muscle_days_abs_count"/>
+                        android:id="@+id/muscle_days_abs_count"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
