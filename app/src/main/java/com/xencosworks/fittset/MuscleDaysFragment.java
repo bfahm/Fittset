@@ -1,7 +1,9 @@
 package com.xencosworks.fittset;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -59,6 +61,7 @@ public class MuscleDaysFragment extends Fragment{
         absCount = view.findViewById(R.id.muscle_days_abs_count);
 
         handleInitialEmptyStateEffect();
+        customizeViewDetailsFragment();
     }
 
     private void handleInitialEmptyStateEffect(){
@@ -97,10 +100,23 @@ public class MuscleDaysFragment extends Fragment{
     interface OnButtonClickListener{
         void onButtonClicked(View view, int code, boolean isEmpty);
     }
+
+
     private OnButtonClickListener mOnButtonClickListener;
 
     private boolean isCurrentEmpty(int muscleGroup){
         return false;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
     }
 
     private void customizeViewDetailsFragment(){

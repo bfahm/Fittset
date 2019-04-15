@@ -43,7 +43,12 @@
 
     </LinearLayout>
 
-    <!--TODO: ADD RECYCLER VIEW HERE-->
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/data_recycler_view"
+        android:layout_below="@id/details_header_container"
+        tools:listitem="@layout/inflator_details_item"/>
 
     <RelativeLayout
         android:id="@+id/empty_view_no_selection"

@@ -18,9 +18,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.xencosworks.fittset.helpers.AllExercisesPageAdapter;
+import com.xencosworks.fittset.MuscleDaysFragment.OnButtonClickListener;
 
 
-public class AllExercises extends AppCompatActivity implements DrawerLayout.DrawerListener {
+public class AllExercises extends AppCompatActivity implements DrawerLayout.DrawerListener, OnButtonClickListener {
 
     private static String LOGTAG = AllExercises.class.getSimpleName();
     private ViewPager viewPager;
@@ -150,68 +151,14 @@ public class AllExercises extends AppCompatActivity implements DrawerLayout.Draw
         }
     }
 
-    //    private void customTabSetup(){
-    //        tvMuscleDays = findViewById(R.id.all_exercises_tab_muscle_days);
-    //        tvDetails = findViewById(R.id.all_exercises_tab_details);
-    //
-    //        tvMuscleDays.setOnClickListener(new View.OnClickListener() {
-    //            @Override
-    //            public void onClick(View view) {
-    //                viewPager.setCurrentItem(0);
-    //            }
-    //        });
-    //
-    //        tvDetails.setOnClickListener(new View.OnClickListener() {
-    //            @Override
-    //            public void onClick(View view) {
-    //                viewPager.setCurrentItem(1);
-    //            }
-    //        });
-    //
-    //        int currentItem = viewPager.getCurrentItem();
-    //        if (currentItem==0){
-    //            customTabSwitchControl(0);
-    //        }else if(currentItem==1){
-    //            customTabSwitchControl(1);
-    //        }else {
-    //            customTabSwitchControl(-1);
-    //        }
-    //
-    //        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-    //            public void onPageScrollStateChanged(int state) {}
-    //            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-    //
-    //            public void onPageSelected(int position) {
-    //                if (position==0){
-    //                    customTabSwitchControl(0);
-    //                }else if(position==1){
-    //                    customTabSwitchControl(1);
-    //                }else {
-    //                    customTabSwitchControl(-1);
-    //                }
-    //            }
-    //        });
-    //
-    //
-    //    }
-    //    private void customTabSwitchControl(int code){
-    //        if(code==0){
-    //            tvMuscleDays.setTextColor(getResources().getColor(R.color.colorPrimary));
-    //            tvMuscleDays.setBackgroundResource(R.drawable.oval_chip_selected);
-    //            tvDetails.setTextColor(getResources().getColor(R.color.colorNotSelected));
-    //            tvDetails.setBackgroundResource(R.drawable.oval_chip);
-    //
-    //        }else if(code==1){
-    //            tvMuscleDays.setTextColor(getResources().getColor(R.color.colorNotSelected));
-    //            tvMuscleDays.setBackgroundResource(R.drawable.oval_chip);
-    //            tvDetails.setTextColor(getResources().getColor(R.color.colorPrimary));
-    //            tvDetails.setBackgroundResource(R.drawable.oval_chip_selected);
-    //        }else{
-    //            tvMuscleDays.setTextColor(getResources().getColor(R.color.colorNotSelected));
-    //            tvMuscleDays.setBackgroundResource(R.drawable.oval_chip);
-    //            tvDetails.setTextColor(getResources().getColor(R.color.colorNotSelected));
-    //            tvDetails.setBackgroundResource(R.drawable.oval_chip);
-    //        }
-    //    }
+    //Overriding method of the mOnButtonClicked Interface of child MuscleDaysFragment
+    @Override
+    public void onButtonClicked(View view, int code, boolean isEmpty) {
+        //Assignment of variables living in the child fragment
+        DetailsFragment.idFromParentPage = code;
+        DetailsFragment.isEmpty = isEmpty;
 
+        int currPos=viewPager.getCurrentItem();
+        viewPager.setCurrentItem(currPos+1);
+    }
 }

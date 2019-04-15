@@ -1,7 +1,6 @@
 package com.xencosworks.fittset;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xencosworks.fittset.Room.Exercise;
 import com.xencosworks.fittset.Room.ExerciseViewModel;
@@ -35,8 +34,8 @@ public class DetailsFragment extends Fragment{
             • A single copy to be shared by all instances of the class
             • A static variable can be accessed directly by the class name and doesn’t need any object
      */
-    public static int idFromParentPage = -5000;
-    public static int isEmpty = -1;
+    public static int idFromParentPage = -1;
+    public static boolean isEmpty = false;
 
     private static String LOGTAG = DetailsFragment.class.getSimpleName();
 
@@ -55,13 +54,29 @@ public class DetailsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Only inflate layout here.
         View rootView = inflater.inflate(R.layout.activity_details, container, false);
+
+        RecyclerView recyclerView = rootView.findViewById(R.id.data_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+
+        final ExerciseRecyclerViewAdapter adapter = new ExerciseRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
+
+        ExerciseViewModel exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+        exerciseViewModel.getAllExercises().observe(this, new Observer<List<Exercise>>() {
+            @Override
+            public void onChanged(@Nullable List<Exercise> exercises) {
+                adapter.setExercise(exercises);
+            }
+        });
+
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //Initialize view here.
-        //super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
 
         headerContainer = view.findViewById(R.id.details_header_container);
         headerContainer.setVisibility(View.INVISIBLE);
@@ -81,21 +96,22 @@ public class DetailsFragment extends Fragment{
         });
     }
 
+    //Reset the state of the fragment to default
     @Override
     public void onDetach() {
         super.onDetach();
-        idFromParentPage=-5000;
-        isEmpty=-1;
+        idFromParentPage=-1;
+        isEmpty=false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        idFromParentPage=-5000;
-        isEmpty=-1;
+        idFromParentPage=-1;
+        isEmpty=false;
     }
 
-    /*@Override
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         switch (idFromParentPage){
@@ -127,18 +143,19 @@ public class DetailsFragment extends Fragment{
 
                 checkIfContent();
 
-                if(idFromParentPage!=-5000){
+                if(idFromParentPage!=-1){
                     headerContainer.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);
                 }
             }
         }
-    }*/
+    }
 
+    // Handle showing the message stating that the muscle group doesn't have exercises now.
     private void checkIfContent(){
-        if(isEmpty==1){
+        if(isEmpty){
             noContentView.setVisibility(View.VISIBLE);
-        }else if(isEmpty==0) {
+        }else{
             noContentView.setVisibility(View.GONE);
         }
     }

@@ -91,6 +91,15 @@ public class Dashboard extends AppCompatActivity implements DrawerLayout.DrawerL
                 startActivity(intent);
             }
         });
+
+        View startTrainingButton = findViewById(R.id.dashboard_start_training);
+        startTrainingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, Test.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
