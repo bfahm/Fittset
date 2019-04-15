@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ public class DetailsFragment extends Fragment{
             • A static variable can be accessed directly by the class name and doesn’t need any object
      */
     public static int idFromParentPage = -1;
-    public static boolean isEmpty = false;
 
     private static String LOGTAG = DetailsFragment.class.getSimpleName();
 
@@ -43,8 +41,12 @@ public class DetailsFragment extends Fragment{
     private TextView muscleGPlaceH;
 
     private View headerContainer;
-    private View emptyView;
+    private View noSelectionView;
     private View noContentView;
+
+    private ExerciseRecyclerViewAdapter adapter;
+    private ExerciseViewModel exerciseViewModel;
+    private RecyclerView recyclerView;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -54,21 +56,6 @@ public class DetailsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Only inflate layout here.
         View rootView = inflater.inflate(R.layout.activity_details, container, false);
-
-        RecyclerView recyclerView = rootView.findViewById(R.id.data_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-
-        final ExerciseRecyclerViewAdapter adapter = new ExerciseRecyclerViewAdapter();
-        recyclerView.setAdapter(adapter);
-
-        ExerciseViewModel exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
-        exerciseViewModel.getAllExercises().observe(this, new Observer<List<Exercise>>() {
-            @Override
-            public void onChanged(@Nullable List<Exercise> exercises) {
-                adapter.setExercise(exercises);
-            }
-        });
 
         return rootView;
     }
@@ -82,7 +69,19 @@ public class DetailsFragment extends Fragment{
         headerContainer.setVisibility(View.INVISIBLE);
         muscleGPlaceH = view.findViewById(R.id.details_muscleg_placeholder);
 
-        emptyView = view.findViewById(R.id.empty_view_no_selection);
+        //RecyclerView & Data Container Initialization----------------------------------------------
+        recyclerView = view.findViewById(R.id.data_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setVisibility(View.GONE); //Initially not visible till user chooses a muscle day
+
+        adapter = new ExerciseRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
+
+        exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+        //------------------------------------------------------------------------------------------
+
+        noSelectionView = view.findViewById(R.id.empty_view_no_selection);
         noContentView = view.findViewById(R.id.empty_view_no_content);
 
         Button newExerciseEmptyContent = view.findViewById(R.id.details_button_add_new_exercise);
@@ -101,14 +100,12 @@ public class DetailsFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         idFromParentPage=-1;
-        isEmpty=false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         idFromParentPage=-1;
-        isEmpty=false;
     }
 
     @Override
@@ -141,23 +138,25 @@ public class DetailsFragment extends Fragment{
             if (isVisibleToUser) {
                 muscleGPlaceH.setText(textMuscleGPlaceH);
 
-                checkIfContent();
-
+                // The following block handling showing the exercises and hiding the empty views.
                 if(idFromParentPage!=-1){
                     headerContainer.setVisibility(View.VISIBLE);
-                    emptyView.setVisibility(View.GONE);
+                    noSelectionView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    exerciseViewModel.getExercisesByGroup(idFromParentPage).observe(this, new Observer<List<Exercise>>() {
+                        @Override
+                        public void onChanged(@Nullable List<Exercise> exercises) {
+                            adapter.setExercise(exercises);
+                            if(exercises.size()>0){
+                                noContentView.setVisibility(View.GONE);
+                            }else {
+                                noContentView.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
                 }
             }
         }
     }
-
-    // Handle showing the message stating that the muscle group doesn't have exercises now.
-    private void checkIfContent(){
-        if(isEmpty){
-            noContentView.setVisibility(View.VISIBLE);
-        }else{
-            noContentView.setVisibility(View.GONE);
-        }
-    }
-
 }

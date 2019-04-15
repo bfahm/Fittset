@@ -98,14 +98,10 @@ public class MuscleDaysFragment extends Fragment{
     }
 
     interface OnButtonClickListener{
-        void onButtonClicked(View view, int code, boolean isEmpty);
+        void onButtonClicked(View view, int code);
     }
 
     private OnButtonClickListener mOnButtonClickListener;
-
-    private boolean isCurrentEmpty(int muscleGroup){
-        return false;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -123,7 +119,7 @@ public class MuscleDaysFragment extends Fragment{
         chestCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view, Exercise.MUSCLE_G_CHEST, isCurrentEmpty(Exercise.MUSCLE_G_CHEST));
+                mOnButtonClickListener.onButtonClicked(view, Exercise.MUSCLE_G_CHEST);
             }
         });
 
@@ -131,7 +127,7 @@ public class MuscleDaysFragment extends Fragment{
         shouldersCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_SHOULDERS, isCurrentEmpty(Exercise.MUSCLE_G_SHOULDERS));
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_SHOULDERS);
             }
         });
 
@@ -139,7 +135,7 @@ public class MuscleDaysFragment extends Fragment{
         backCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_BACK, isCurrentEmpty(Exercise.MUSCLE_G_BACK));
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_BACK);
             }
         });
 
@@ -147,7 +143,7 @@ public class MuscleDaysFragment extends Fragment{
         biCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_BI, isCurrentEmpty(Exercise.MUSCLE_G_BI));
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_BI);
             }
         });
 
@@ -155,7 +151,7 @@ public class MuscleDaysFragment extends Fragment{
         triCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_TRI, isCurrentEmpty(Exercise.MUSCLE_G_TRI));
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_TRI);
             }
         });
 
@@ -163,7 +159,7 @@ public class MuscleDaysFragment extends Fragment{
         legsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_LEGS, isCurrentEmpty(Exercise.MUSCLE_G_LEGS));
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_LEGS);
             }
         });
 
@@ -171,7 +167,7 @@ public class MuscleDaysFragment extends Fragment{
         absCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_ABS, isCurrentEmpty(Exercise.MUSCLE_G_ABS));
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_ABS);
             }
         });
 

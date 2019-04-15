@@ -1,7 +1,6 @@
 package com.xencosworks.fittset;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ContentValues;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -162,10 +161,9 @@ public class AllExercises extends AppCompatActivity implements DrawerLayout.Draw
 
     //Overriding method of the mOnButtonClicked Interface of child MuscleDaysFragment
     @Override
-    public void onButtonClicked(View view, int code, boolean isEmpty) {
+    public void onButtonClicked(View view, int code) {
         //Assignment of variables living in the child fragment
         DetailsFragment.idFromParentPage = code;
-        DetailsFragment.isEmpty = isEmpty;
 
         int currPos=viewPager.getCurrentItem();
         viewPager.setCurrentItem(currPos+1);
