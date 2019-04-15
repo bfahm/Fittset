@@ -1,5 +1,8 @@
 package com.xencosworks.fittset;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.xencosworks.fittset.Room.Exercise;
+import com.xencosworks.fittset.Room.ExerciseViewModel;
+
+import java.util.List;
 
 
 public class DetailsFragment extends Fragment{
@@ -36,8 +45,7 @@ public class DetailsFragment extends Fragment{
     private View emptyView;
     private View noContentView;
 
-    private ListView listView;
-
+    private ExerciseViewModel exerciseViewModel;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -45,17 +53,19 @@ public class DetailsFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Only inflate layout here.
         View rootView = inflater.inflate(R.layout.activity_details, container, false);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Initialize view here.
         //super.onViewCreated(view, savedInstanceState);
 
-        muscleGPlaceH = view.findViewById(R.id.details_muscleg_placeholder);
         headerContainer = view.findViewById(R.id.details_header_container);
         headerContainer.setVisibility(View.INVISIBLE);
+        muscleGPlaceH = view.findViewById(R.id.details_muscleg_placeholder);
 
         emptyView = view.findViewById(R.id.empty_view_no_selection);
         noContentView = view.findViewById(R.id.empty_view_no_content);
@@ -67,6 +77,15 @@ public class DetailsFragment extends Fragment{
                 Intent intent = new Intent(getActivity(), InputForm.class);
                 intent.putExtra("txtData", idFromParentPage+"");
                 startActivity(intent);
+            }
+        });
+
+        exerciseViewModel = ViewModelProviders.of(getActivity()).get(ExerciseViewModel.class);
+        exerciseViewModel.getAllExercises().observe(getActivity(), new Observer<List<Exercise>>() {
+            @Override
+            public void onChanged(@Nullable List<Exercise> exercises) {
+                //TODO: update recycler view here
+                Toast.makeText(getActivity(), "changed", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -30,6 +30,7 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercise_table WHERE muscleGroup == :muscleGroup")
     LiveData<List<Exercise>> getAllExercisesOfGroup(int muscleGroup);
 
-}
+    @Query("SELECT * FROM exercise_table")
+    LiveData<List<Exercise>> getAllExercises();
 
-//TODO: Implement LiveData as a next step https://youtu.be/0cg09tlAAQ0?t=335
+}
