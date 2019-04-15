@@ -58,17 +58,20 @@ public class MuscleDaysFragment extends Fragment{
         legsCount = view.findViewById(R.id.muscle_days_legs_count);
         absCount = view.findViewById(R.id.muscle_days_abs_count);
 
+        handleInitialEmptyStateEffect();
+    }
+
+    private void handleInitialEmptyStateEffect(){
         exerciseViewModel.getAllExercises().observe(this, new Observer<List<Exercise>>() {
             @Override
             public void onChanged(@Nullable List<Exercise> exercises) {
-                if(exercises.size()>0){
+                if(exercises.size()>0){ //The line that handles showing/not showing the info.
                     Log.v(LOGTAG, "ENTERED TO COUNTING");
                     countExercises();
                 }
             }
         });
     }
-
 
     private void countExercises() {
         final TextView[] tvArray = {chestCount, shouldersCount, backCount, biCount, triCount, legsCount, absCount};
@@ -89,7 +92,6 @@ public class MuscleDaysFragment extends Fragment{
                 }
             });
         }
-
     }
 
 
