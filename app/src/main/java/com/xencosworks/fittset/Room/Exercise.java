@@ -41,11 +41,11 @@ public class Exercise {
         this.customRoutine = customRoutine;
     }
 
-    public Exercise(@NonNull String exerciseName, int muscleGroup, int sets, int reps) {
+    public Exercise(@NonNull String exerciseName, int muscleGroup, int maxWeight, int lastWeight) {
         this.exerciseName = exerciseName;
         this.muscleGroup = muscleGroup;
-        this.sets = sets;
-        this.reps = reps;
+        this.maxWeight = maxWeight;
+        this.lastWeight = lastWeight;
     }
 
     public int getId() {

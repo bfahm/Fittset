@@ -1,5 +1,6 @@
 package com.xencosworks.fittset;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,8 @@ import android.widget.TextView;
 import com.shawnlin.numberpicker.NumberPicker;
 
 import com.scalified.fab.ActionButton;
-
+import com.xencosworks.fittset.Room.Exercise;
+import com.xencosworks.fittset.Room.ExerciseViewModel;
 
 
 public class InputForm extends AppCompatActivity {
@@ -120,6 +122,11 @@ public class InputForm extends AppCompatActivity {
         String exTitle = exTitleIP.getText().toString();
         String exNotes = exNotesIP.getText().toString();
 
+        Exercise exercise = new Exercise(exTitle, exNotes, mMuscleGroup, mMaxWeight, mMaxWeight, mSets, mReps, 0);
+
+        ExerciseViewModel exerciseViewModel;
+        exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+        exerciseViewModel.insert(exercise);
     }
 
     private void defineContent(){

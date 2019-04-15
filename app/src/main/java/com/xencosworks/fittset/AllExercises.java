@@ -1,5 +1,6 @@
 package com.xencosworks.fittset;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentValues;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.xencosworks.fittset.Room.Exercise;
+import com.xencosworks.fittset.Room.ExerciseViewModel;
 import com.xencosworks.fittset.helpers.AllExercisesPageAdapter;
 import com.xencosworks.fittset.MuscleDaysFragment.OnButtonClickListener;
 
@@ -85,13 +88,19 @@ public class AllExercises extends AppCompatActivity implements DrawerLayout.Draw
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ContentValues values;
+        ExerciseViewModel exerciseViewModel;
+        exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+
+        Exercise dummyChest = new Exercise("dummyChest", 1, 10, 10);
+        Exercise dummyShoulder = new Exercise("dummyShoulder", 2, 10, 10);
         switch (item.getItemId()) {
             case R.id.action_allex_settings:
                 return true;
             case R.id.action_allex_dummy_chest:
+                exerciseViewModel.insert(dummyChest);
                 return true;
             case R.id.action_allex_dummy_shoulders:
+                exerciseViewModel.insert(dummyShoulder);
                 return true;
             default:
                 return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
