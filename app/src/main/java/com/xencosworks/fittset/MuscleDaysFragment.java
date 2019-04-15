@@ -101,7 +101,6 @@ public class MuscleDaysFragment extends Fragment{
         void onButtonClicked(View view, int code, boolean isEmpty);
     }
 
-
     private OnButtonClickListener mOnButtonClickListener;
 
     private boolean isCurrentEmpty(int muscleGroup){

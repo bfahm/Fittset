@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Exercise.class}, version = 1)
+@Database(entities = {Exercise.class}, version = 3)
 public abstract class MainDatabase extends RoomDatabase {
 
 
@@ -27,7 +27,7 @@ public abstract class MainDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     MainDatabase.class, DATABASE_NAME)
                     .fallbackToDestructiveMigration() //TODO: Change this when publishing
-                    .addCallback(roomCallback)
+                    //.addCallback(roomCallback)
                     .build();
         }
         return instance;
@@ -35,16 +35,16 @@ public abstract class MainDatabase extends RoomDatabase {
 
     //Create a room callback which basically gets called when the database is first created.
     //This has an onCreate Function, we'll populate the insertion task there.
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+    /*private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new PopulateDbAsyncTask(instance).execute();
         }
-    };
+    };*/
 
     //To be able to add data to database, it needs to be done in background.
-    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
+    /*private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{
         private ExerciseDao exerciseDao;
         private PopulateDbAsyncTask(MainDatabase db){
             exerciseDao = db.exerciseDao();
@@ -67,5 +67,5 @@ public abstract class MainDatabase extends RoomDatabase {
 
             return null;
         }
-    }
+    }*/
 }
