@@ -94,5 +94,71 @@ public class MuscleDaysFragment extends Fragment{
         }
     }
 
+    interface OnButtonClickListener{
+        void onButtonClicked(View view, int code, boolean isEmpty);
+    }
+    private OnButtonClickListener mOnButtonClickListener;
 
+    private boolean isCurrentEmpty(int muscleGroup){
+        return false;
+    }
+
+    private void customizeViewDetailsFragment(){
+        View chestCard = rootView.findViewById(R.id.muscle_days_chest_card);
+        chestCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view, Exercise.MUSCLE_G_CHEST, isCurrentEmpty(Exercise.MUSCLE_G_CHEST));
+            }
+        });
+
+        View shouldersCard = rootView.findViewById(R.id.muscle_days_shoulders_card);
+        shouldersCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_SHOULDERS, isCurrentEmpty(Exercise.MUSCLE_G_SHOULDERS));
+            }
+        });
+
+        View backCard = rootView.findViewById(R.id.muscle_days_back_card);
+        backCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_BACK, isCurrentEmpty(Exercise.MUSCLE_G_BACK));
+            }
+        });
+
+        View biCard = rootView.findViewById(R.id.muscle_days_bi_card);
+        biCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_BI, isCurrentEmpty(Exercise.MUSCLE_G_BI));
+            }
+        });
+
+        View triCard = rootView.findViewById(R.id.muscle_days_tri_card);
+        triCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_TRI, isCurrentEmpty(Exercise.MUSCLE_G_TRI));
+            }
+        });
+
+        View legsCard = rootView.findViewById(R.id.muscle_days_legs_card);
+        legsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_LEGS, isCurrentEmpty(Exercise.MUSCLE_G_LEGS));
+            }
+        });
+
+        View absCard = rootView.findViewById(R.id.muscle_days_abs_card);
+        absCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnButtonClickListener.onButtonClicked(view,Exercise.MUSCLE_G_ABS, isCurrentEmpty(Exercise.MUSCLE_G_ABS));
+            }
+        });
+
+    }
 }
