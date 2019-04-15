@@ -52,6 +52,9 @@ public abstract class MainDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             exerciseDao.insert(new Exercise("Bench Press", Exercise.MUSCLE_G_CHEST, 4, 10));
+            exerciseDao.insert(new Exercise("Bench Press", Exercise.MUSCLE_G_CHEST, 4, 10));
+            exerciseDao.insert(new Exercise("Bench Press", Exercise.MUSCLE_G_CHEST, 4, 10));
+            exerciseDao.insert(new Exercise("Bench Press", Exercise.MUSCLE_G_CHEST, 4, 10));
             exerciseDao.insert(new Exercise("Back Shoulders", Exercise.MUSCLE_G_SHOULDERS, 4, 10));
             exerciseDao.insert(new Exercise("Inclined Legs", Exercise.MUSCLE_G_LEGS, 4, 50));
             return null;

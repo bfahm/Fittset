@@ -14,10 +14,10 @@ import com.xencosworks.fittset.DetailsFragment;
 import com.xencosworks.fittset.MuscleDaysFragment;
 import com.xencosworks.fittset.R;
 
-public class AllExercisesAdapter extends FragmentPagerAdapter {
+public class AllExercisesPageAdapter extends FragmentPagerAdapter {
     private  Context mContext;
 
-    public AllExercisesAdapter(Context context, FragmentManager fm) {
+    public AllExercisesPageAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }

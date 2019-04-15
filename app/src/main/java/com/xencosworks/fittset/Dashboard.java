@@ -87,7 +87,7 @@ public class Dashboard extends AppCompatActivity implements DrawerLayout.DrawerL
         routinesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, AllExercises.class);
+                Intent intent = new Intent(Dashboard.this, Test.class);
                 startActivity(intent);
             }
         });

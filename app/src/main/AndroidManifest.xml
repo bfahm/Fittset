@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Test"></activity>
         <activity
             android:name=".Dashboard"
             android:theme="@style/AppThemeDashboard">
@@ -29,11 +30,7 @@
         <activity
             android:name=".AllExercises"
             android:label="All Exercises"
-            android:theme="@style/AppThemeAllEx">
-        </activity>
-        <!-- The exported attribute is used when sharing inner data from the app to another apps. -->
+            android:theme="@style/AppThemeAllEx"></activity>
     </application>
 
 </manifest>
-
-<!--TODO: Remove Database Provider when implementing room-->

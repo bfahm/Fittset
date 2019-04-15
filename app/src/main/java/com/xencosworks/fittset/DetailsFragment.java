@@ -8,16 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xencosworks.fittset.Room.Exercise;
 import com.xencosworks.fittset.Room.ExerciseViewModel;
+import com.xencosworks.fittset.helpers.ExerciseRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -44,8 +46,6 @@ public class DetailsFragment extends Fragment{
     private View headerContainer;
     private View emptyView;
     private View noContentView;
-
-    private ExerciseViewModel exerciseViewModel;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -77,15 +77,6 @@ public class DetailsFragment extends Fragment{
                 Intent intent = new Intent(getActivity(), InputForm.class);
                 intent.putExtra("txtData", idFromParentPage+"");
                 startActivity(intent);
-            }
-        });
-
-        exerciseViewModel = ViewModelProviders.of(getActivity()).get(ExerciseViewModel.class);
-        exerciseViewModel.getAllExercises().observe(getActivity(), new Observer<List<Exercise>>() {
-            @Override
-            public void onChanged(@Nullable List<Exercise> exercises) {
-                //TODO: update recycler view here
-                Toast.makeText(getActivity(), "changed", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -132,7 +123,6 @@ public class DetailsFragment extends Fragment{
         }
         if(getActivity() != null && isAdded()) {
             if (isVisibleToUser) {
-                getLoaderManager().restartLoader(0, null, this);
                 muscleGPlaceH.setText(textMuscleGPlaceH);
 
                 checkIfContent();

@@ -43,11 +43,7 @@
 
     </LinearLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/data_list_view"
-        android:layout_below="@id/details_header_container"/>
+    <!--TODO: ADD RECYCLER VIEW HERE-->
 
     <RelativeLayout
         android:id="@+id/empty_view_no_selection"

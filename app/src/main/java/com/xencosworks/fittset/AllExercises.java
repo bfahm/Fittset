@@ -2,7 +2,6 @@ package com.xencosworks.fittset;
 
 import android.content.ContentValues;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
@@ -18,7 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.xencosworks.fittset.helpers.AllExercisesAdapter;
+import com.xencosworks.fittset.helpers.AllExercisesPageAdapter;
 
 
 public class AllExercises extends AppCompatActivity implements DrawerLayout.DrawerListener {
@@ -38,7 +37,7 @@ public class AllExercises extends AppCompatActivity implements DrawerLayout.Draw
         viewPager = findViewById(R.id.viewpager);
 
         // Create an adapter that knows which fragment should be shown on each page
-        AllExercisesAdapter adapter = new AllExercisesAdapter (this, getSupportFragmentManager());
+        AllExercisesPageAdapter adapter = new AllExercisesPageAdapter(this, getSupportFragmentManager());
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
