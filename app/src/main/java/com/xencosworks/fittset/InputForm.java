@@ -1,9 +1,5 @@
 package com.xencosworks.fittset;
 
-import android.content.ContentValues;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +18,6 @@ import android.widget.TextView;
 import com.shawnlin.numberpicker.NumberPicker;
 
 import com.scalified.fab.ActionButton;
-import com.xencosworks.fittset.data.ExerciseContract.ExerciseEntry;
 
 
 
@@ -45,8 +40,6 @@ public class InputForm extends AppCompatActivity {
 
     private int tempReps = 10;
     private int mReps=0;
-
-    private Uri uri = ExerciseEntry.PATH_ALL_EXERCISES_URI;
 
     private int customCode = -1;
 
@@ -127,16 +120,6 @@ public class InputForm extends AppCompatActivity {
         String exTitle = exTitleIP.getText().toString();
         String exNotes = exNotesIP.getText().toString();
 
-        ContentValues values = new ContentValues();
-        values.put(ExerciseEntry.COLUMN_EXERCISE_NAME, exTitle);
-        values.put(ExerciseEntry.COLUMN_EXERCISE_NOTES, exNotes);
-        values.put(ExerciseEntry.COLUMN_MUSCLE_GROUP, mMuscleGroup);
-        values.put(ExerciseEntry.COLUMN_MAX_WEIGHT, mMaxWeight);
-        values.put(ExerciseEntry.COLUMN_LAST_WEIGHT, mMaxWeight);
-        values.put(ExerciseEntry.COLUMN_SETS, mSets);
-        values.put(ExerciseEntry.COLUMN_REPS, mReps);
-
-        Uri newUri = getContentResolver().insert(uri, values);
     }
 
     private void defineContent(){
@@ -313,4 +296,7 @@ public class InputForm extends AppCompatActivity {
     //TODO: Add card to view unknown groups or
                                 //TODO: add prompt to disable adding unknown group
     //TODO: Add prompt to change unchanged fields and to save changes
+
+    //TODO: BUG FIX: being redirected from the all exercises, the muscle group is already chosen
+    //TODO:          but user must rechoose it in order to add the exercise successfully
 }

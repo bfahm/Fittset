@@ -18,15 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.xencosworks.fittset.MuscleDaysFragment.OnButtonClickListener;
 import com.xencosworks.fittset.helpers.AllExercisesAdapter;
-import com.xencosworks.fittset.data.ExerciseContract.ExerciseEntry;
 
 
-public class AllExercises extends AppCompatActivity implements OnButtonClickListener, DrawerLayout.DrawerListener {
+public class AllExercises extends AppCompatActivity implements DrawerLayout.DrawerListener {
 
     private static String LOGTAG = AllExercises.class.getSimpleName();
-    private Uri uri = ExerciseEntry.PATH_ALL_EXERCISES_URI;
     private ViewPager viewPager;
     private int[] icResId = {R.drawable.ic_allex_tab_11, R.drawable.ic_allex_tab_22};
     private ActionBarDrawerToggle mToggle;
@@ -89,35 +86,12 @@ public class AllExercises extends AppCompatActivity implements OnButtonClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ContentValues values;
-        Uri newUri;
         switch (item.getItemId()) {
             case R.id.action_allex_settings:
                 return true;
             case R.id.action_allex_dummy_chest:
-                values = new ContentValues();
-                values.put(ExerciseEntry.COLUMN_EXERCISE_NAME, "New Bench Press");
-                values.put(ExerciseEntry.COLUMN_EXERCISE_NOTES, "Some test notes");
-                values.put(ExerciseEntry.COLUMN_MUSCLE_GROUP, ExerciseEntry.MUSCLE_G_CHEST);
-                values.put(ExerciseEntry.COLUMN_MAX_WEIGHT, "999");
-                values.put(ExerciseEntry.COLUMN_LAST_WEIGHT, "12");
-                values.put(ExerciseEntry.COLUMN_SETS, 4);
-                values.put(ExerciseEntry.COLUMN_REPS, 10);
-                values.put(ExerciseEntry.COLUMN_CUSTOM_ROUTINE, 0);
-
-                newUri = getApplicationContext().getContentResolver().insert(uri, values);
                 return true;
             case R.id.action_allex_dummy_shoulders:
-                values = new ContentValues();
-                values.put(ExerciseEntry.COLUMN_EXERCISE_NAME, "New Lateral Pull");
-                values.put(ExerciseEntry.COLUMN_EXERCISE_NOTES, "Those are real shoulders");
-                values.put(ExerciseEntry.COLUMN_MUSCLE_GROUP, ExerciseEntry.MUSCLE_G_SHOULDERS);
-                values.put(ExerciseEntry.COLUMN_MAX_WEIGHT, "5555");
-                values.put(ExerciseEntry.COLUMN_LAST_WEIGHT, "5");
-                values.put(ExerciseEntry.COLUMN_SETS, 3);
-                values.put(ExerciseEntry.COLUMN_REPS, 9);
-                values.put(ExerciseEntry.COLUMN_CUSTOM_ROUTINE, 5);
-
-                newUri = getApplicationContext().getContentResolver().insert(uri, values);
                 return true;
             default:
                 return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -130,26 +104,6 @@ public class AllExercises extends AppCompatActivity implements OnButtonClickList
         return true;
     }
 
-    @Override
-    public void onButtonClicked(View view, int selectedCode, int isEmpty) {
-        DetailsFragment.idFromParentPage = selectedCode;
-        DetailsFragment.isEmpty = isEmpty;
-
-        int currPos=viewPager.getCurrentItem();
-        viewPager.setCurrentItem(currPos+1);
-        //        switch(view.getId()){
-//
-//            case R.id.muscle_days_chest_card:
-//                //handle currPos is zero
-//                viewPager.setCurrentItem(currPos+1);
-//                break;
-//
-//            case R.id.muscle_days_shoulders_card:
-//                //handle currPos is reached last item
-//                viewPager.setCurrentItem(currPos+1);
-//                break;
-//        }
-    }
 
     @Override
     public void onBackPressed() {

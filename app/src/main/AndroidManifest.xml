@@ -31,12 +31,9 @@
             android:label="All Exercises"
             android:theme="@style/AppThemeAllEx">
         </activity>
-
-        <provider
-            android:name=".data.ExerciseProvider"
-            android:authorities="com.xencosworks.fittset"
-            android:exported="false" />
         <!-- The exported attribute is used when sharing inner data from the app to another apps. -->
     </application>
 
 </manifest>
+
+<!--TODO: Remove Database Provider when implementing room-->

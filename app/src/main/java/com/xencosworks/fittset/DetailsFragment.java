@@ -1,32 +1,19 @@
 package com.xencosworks.fittset;
 
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.database.Cursor;
 import android.widget.Button;
 import android.widget.ListView;
-import com.xencosworks.fittset.data.ExerciseContract.ExerciseEntry;
-import com.xencosworks.fittset.helpers.ExerciseCursorAdapter;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.content.CursorLoader;
 import android.widget.TextView;
 
 
-public class DetailsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DetailsFragment extends Fragment{
     /**
      * NOTE ABOUT 'STATIC' MODIFIER:
      * Static variable is a variable which belongs to the class and initialized ONLY ONCE
@@ -41,9 +28,6 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
     public static int isEmpty = -1;
 
     private static String LOGTAG = DetailsFragment.class.getSimpleName();
-
-    private ExerciseCursorAdapter adapter;
-    private Uri uri = ExerciseEntry.PATH_ALL_EXERCISES_URI;
 
     private String textMuscleGPlaceH = "";
     private TextView muscleGPlaceH;
@@ -62,45 +46,8 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_details, container, false);
-
-        //Attach listView to Adapter
-        listView = rootView.findViewById(R.id.data_list_view);
-        adapter = new ExerciseCursorAdapter(getActivity(), null);
-        listView.setAdapter(adapter);
-
-        //Kick off the loader
-        getLoaderManager().initLoader(0, null, this);
-        getLoaderManager().initLoader(1, null, this);
-        //------------------------------------------------------------------------------------------
         return rootView;
     }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        String selection = ExerciseEntry.COLUMN_MUSCLE_GROUP + "=?";
-        String[] selectionArgs = {""+ idFromParentPage};
-        return new CursorLoader(getActivity(), uri, null, selection, selectionArgs, null);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        switch (loader.getId()){
-            case 0:
-                adapter.swapCursor(cursor);
-            case 1:
-                int i = cursor.getCount();
-                if(i>0){
-                    noContentView.setVisibility(View.GONE);
-                }
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null); // Called at reset (no data needed)
-    }
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -138,7 +85,7 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
         isEmpty=-1;
     }
 
-    @Override
+    /*@Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         switch (idFromParentPage){
@@ -177,7 +124,7 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
                 }
             }
         }
-    }
+    }*/
 
     private void checkIfContent(){
         if(isEmpty==1){
@@ -188,21 +135,3 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
 }
-
-//TODO: Use projection at stable release
-/*
-displayDatabaseInfo -- History
-
-
-private void displayDatabaseInfo() {
-        String selection = ExerciseEntry.COLUMN_MUSCLE_GROUP + "=?";
-        String[] selectionArgs = {""+ idFromParentPage};
-
-        --We removed the direct call to the database (getReadableDatabase) and the direct query
-        --to that database we called and replaced using the help of the content resolver.
-
-        Cursor cursor = getContentResolver().query(uri, null, selection, selectionArgs, null);
-
-        ListView listView = findViewById(R.id.test_list_view);
-        adapter = new ExerciseCursorAdapter(this, cursor);
-*/
