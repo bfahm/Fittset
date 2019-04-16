@@ -1,6 +1,7 @@
 package com.xencosworks.fittset;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,9 +28,22 @@ public class InputForm extends AppCompatActivity {
 
     private static String LOGTAG = InputForm.class.getSimpleName();
 
+    private ExerciseViewModel exerciseViewModel;
+    private Exercise exercise = null;
+
     private View AlteringExerciseContents;
     private ImageView AlteringExerciseArrow;
+
+    private EditText exTitleIP;
+    private EditText exNotesIP;
     private TextView musclesTv;
+    private TextView maxWeightTv;
+    private TextView setsRepsTv;
+
+
+    private int mExerciseId = -1;
+    private String mExerciseName = "";
+    private String mExerciseNotes = "";
 
     private int tempMuscleGroup = 0;
     private int mMuscleGroup=0;
@@ -43,27 +57,48 @@ public class InputForm extends AppCompatActivity {
     private int tempReps = 10;
     private int mReps=0;
 
-    private int customCode = -1;
-
     private final String[] musclesArr = {"Unspecified", "Chest", "Shoulders", "Back", "Biceps", "Triceps", "Legs", "Abs"};
+
+    public static String EXTRA_ID = "com.xencosworks.fittset.InputForm.EXTRA_ID";
+    public static String EXTRA_NAME = "com.xencosworks.fittset.InputForm.EXTRA_NAME";
+    public static String EXTRA_NOTES = "com.xencosworks.fittset.InputForm.EXTRA_NOTES";
+    public static String EXTRA_MUSCLE_GROUP = "com.xencosworks.fittset.InputForm.EXTRA_MUSCLE_GROUP";
+    public static String EXTRA_MAX_WEIGHT = "com.xencosworks.fittset.InputForm.EXTRA_MAX_WEIGHT";
+    public static String EXTRA_SETS = "com.xencosworks.fittset.InputForm.EXTRA_SETS";
+    public static String EXTRA_REPS = "com.xencosworks.fittset.InputForm.EXTRA_REPS";
+
+    public static final int ADD_EXERCISE_REQUEST = 1;
+    public static final int EDIT_EXERCISE_REQUEST = 2;
+
+    private int currentState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_form);
+
+        exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+
         initSetup();
         setUpFab();
-        defineContent();
+        underlineEffect();
+        initializeViews();
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null) {
-            String txtData = bundle.getString("txtData", "No value received");
-            customCode = Integer.parseInt(txtData);
-            customCodeHelper();
-        }else{
-            customCode= 0;
-            customCodeHelper();
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(EXTRA_ID)){
+            customCodeHelper(intent, EDIT_EXERCISE_REQUEST);
+        }else if(intent.hasExtra(EXTRA_NAME)) {
+            customCodeHelper(intent, ADD_EXERCISE_REQUEST);
         }
+    }
+
+    private void initializeViews(){
+        exTitleIP = findViewById(R.id.input_form_ex_title);
+        exNotesIP = findViewById(R.id.input_form_ex_notes);
+        musclesTv = findViewById(R.id.input_form_ex_muscle_gp_tv);
+        maxWeightTv = findViewById(R.id.input_form_ex_max_weight_tv);
+        setsRepsTv = findViewById(R.id.input_form_ex_sets_reps_tv);
     }
 
     @Override
@@ -78,10 +113,38 @@ public class InputForm extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void customCodeHelper(){
-        tempMuscleGroup = customCode;
-        musclesTv = findViewById(R.id.input_form_ex_muscle_gp_tv);
-        musclesTv.setText(musclesArr[customCode]);
+    private void customCodeHelper(Intent intent, int requestCode){
+        switch (requestCode){
+            case ADD_EXERCISE_REQUEST:
+                mMuscleGroup = intent.getIntExtra(EXTRA_MUSCLE_GROUP, -1);
+                musclesTv.setText(musclesArr[mMuscleGroup]);
+
+                currentState = ADD_EXERCISE_REQUEST;
+                break;
+            case EDIT_EXERCISE_REQUEST:
+                mExerciseId = intent.getIntExtra(EXTRA_ID, -1);
+
+                mExerciseName = intent.getStringExtra(EXTRA_NAME);
+                exTitleIP.setText(mExerciseName);
+
+                mExerciseNotes = intent.getStringExtra(EXTRA_NOTES);
+                exNotesIP.setText(mExerciseNotes);
+
+                mMuscleGroup = intent.getIntExtra(EXTRA_MUSCLE_GROUP, -1);
+                musclesTv.setText(musclesArr[mMuscleGroup]);
+
+                mReps = intent.getIntExtra(EXTRA_REPS, -1);
+                mSets = intent.getIntExtra(EXTRA_SETS, -1);
+                setsRepsTv.setText(getString(R.string.sets_reps, mSets, mReps));
+
+                mMaxWeight = intent.getIntExtra(EXTRA_MAX_WEIGHT, -1);
+                maxWeightTv.setText(getString(R.string.kg, mMaxWeight));
+
+                currentState = EDIT_EXERCISE_REQUEST;
+                break;
+            default:
+                return;
+        }
     }
 
     @Override
@@ -109,27 +172,30 @@ public class InputForm extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pullData();
+                pullData(currentState);
                 finish();
             }
         });
     }
 
-    private void pullData(){
-        EditText exTitleIP = findViewById(R.id.input_form_ex_title);
-        EditText exNotesIP = findViewById(R.id.input_form_ex_notes);
+    private void pullData(int requestCode){
+        if(requestCode == ADD_EXERCISE_REQUEST){
+            String exTitle = exTitleIP.getText().toString();
+            String exNotes = exNotesIP.getText().toString();
 
-        String exTitle = exTitleIP.getText().toString();
-        String exNotes = exNotesIP.getText().toString();
+            exercise = new Exercise(exTitle, exNotes, mMuscleGroup, mMaxWeight, mMaxWeight, mSets, mReps, 0);
+            exerciseViewModel.insert(exercise);
+            Log.e(LOGTAG, "--------------------------OTHER WAY");
+        }else if(requestCode == EDIT_EXERCISE_REQUEST){
+            exercise = new Exercise(mExerciseName, mExerciseNotes, mMuscleGroup, mMaxWeight, mMaxWeight, mSets, mReps, 0);
+            exercise.setId(mExerciseId);
+            exerciseViewModel.update(exercise);
+            Log.e(LOGTAG, "--------------------------TRIED TO UPDATE");
+        }
 
-        Exercise exercise = new Exercise(exTitle, exNotes, mMuscleGroup, mMaxWeight, mMaxWeight, mSets, mReps, 0);
-
-        ExerciseViewModel exerciseViewModel;
-        exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
-        exerciseViewModel.insert(exercise);
     }
 
-    private void defineContent(){
+    private void underlineEffect(){
         final View exGroupIP = findViewById(R.id.input_form_ex_muscle_gp);
         final View exMaxWeightIP = findViewById(R.id.input_form_ex_max_weight);
         final View exSets_RepsIP = findViewById(R.id.input_form_ex_sets_reps);
@@ -241,8 +307,6 @@ public class InputForm extends AppCompatActivity {
 
         numberPickerMaxWeight.setValue(tempMaxWeight);
 
-        final TextView maxWeightTv = findViewById(R.id.input_form_ex_max_weight_tv);
-
         Button confirmButton = dialog.findViewById(R.id.input_form_dialog_choose_weight);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,8 +347,6 @@ public class InputForm extends AppCompatActivity {
                 tempSets = newVal;
             }
         });
-
-        final TextView setsRepsTv = findViewById(R.id.input_form_ex_sets_reps_tv);
 
         Button confirmButton = dialog.findViewById(R.id.input_form_dialog_choose_setsreps);
         confirmButton.setOnClickListener(new View.OnClickListener() {

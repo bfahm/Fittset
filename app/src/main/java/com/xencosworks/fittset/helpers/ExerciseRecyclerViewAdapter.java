@@ -2,7 +2,6 @@ package com.xencosworks.fittset.helpers;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import java.util.List;
 
 public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRecyclerViewAdapter.ExerciseHolder> {
     private List<Exercise> exercises = new ArrayList<>();
+    public OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -65,6 +65,28 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
             exerciseMaxWeight = itemView.findViewById(R.id.inflator_details_max_weight);
             exerciseLastWeight = itemView.findViewById(R.id.inflator_details_last_weight);
             exerciseNewBest = itemView.findViewById(R.id.inflator_details_new_best);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //When an item is clicked, we just pass the exercise that was clicked to out custom listener.
+                    int position = getAdapterPosition();
+                    if(listener!=null && position!=RecyclerView.NO_POSITION) {
+                        //when listened to a click, pass the corresponding exercise to be
+                        //handled on the required activity/fragment
+                        listener.onItemClick(exercises.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Exercise exercise); //to be implemented in the required activity/fragment
+                                             //where the passed exercise (retrieve from the actual listener in ExerciseHolder)
+                                             //will be used there.
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }

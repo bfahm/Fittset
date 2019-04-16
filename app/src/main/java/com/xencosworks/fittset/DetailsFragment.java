@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,7 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +56,9 @@ public class DetailsFragment extends Fragment{
     private ExerciseViewModel exerciseViewModel;
     private RecyclerView recyclerView;
 
+    public static final int ADD_EXERCISE_REQUEST = 1;
+    public static final int EDIT_EXERCISE_REQUEST = 2;
+
     public DetailsFragment() {
         // Required empty public constructor
     }
@@ -90,6 +91,7 @@ public class DetailsFragment extends Fragment{
 
         exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
         initializeFancyRecyclerView();
+        handleRedirectsFromRecyclerView();
         //------------------------------------------------------------------------------------------
 
         noSelectionView = view.findViewById(R.id.empty_view_no_selection);
@@ -100,7 +102,7 @@ public class DetailsFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), InputForm.class);
-                intent.putExtra("txtData", idFromParentPage+"");
+                intent.putExtra(InputForm.EXTRA_MUSCLE_GROUP, idFromParentPage);
                 startActivity(intent);
             }
         });
@@ -162,6 +164,23 @@ public class DetailsFragment extends Fragment{
                 }
             }
         }).attachToRecyclerView(recyclerView);
+    }
+
+    private void handleRedirectsFromRecyclerView(){
+        adapter.setOnItemClickListener(new ExerciseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Exercise exercise) {
+                Intent intent = new Intent(getActivity(), InputForm.class);
+                intent.putExtra(InputForm.EXTRA_ID, exercise.getId());
+                intent.putExtra(InputForm.EXTRA_NAME, exercise.getExerciseName());
+                intent.putExtra(InputForm.EXTRA_NOTES, exercise.getExerciseNotes());
+                intent.putExtra(InputForm.EXTRA_MUSCLE_GROUP, exercise.getMuscleGroup());
+                intent.putExtra(InputForm.EXTRA_MAX_WEIGHT, exercise.getMaxWeight());
+                intent.putExtra(InputForm.EXTRA_SETS, exercise.getSets());
+                intent.putExtra(InputForm.EXTRA_REPS, exercise.getReps());
+                startActivity(intent);
+            }
+        });
     }
 
     //Reset the state of the fragment to default
