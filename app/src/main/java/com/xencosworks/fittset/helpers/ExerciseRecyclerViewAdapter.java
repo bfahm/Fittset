@@ -13,6 +13,11 @@ import com.xencosworks.fittset.Room.Exercise;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Previously tried to implement a ListView (Which extends RecyclerView) for animations in RecyclerView
+ * but it did not work (did not show data in fragment, but showed them in regular activiy),
+ * try implementing later.
+ * TODO: https://youtu.be/xPPMygGxiEo
+ */
 public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRecyclerViewAdapter.ExerciseHolder> {
     private List<Exercise> exercises = new ArrayList<>();
     public OnItemClickListener listener;
