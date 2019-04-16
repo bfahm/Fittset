@@ -29,7 +29,6 @@ public class InputForm extends AppCompatActivity {
     private static String LOGTAG = InputForm.class.getSimpleName();
 
     private ExerciseViewModel exerciseViewModel;
-    private Exercise exercise = null;
 
     private final String[] musclesArray = {"Unspecified", "Chest", "Shoulders", "Back", "Biceps", "Triceps", "Legs", "Abs"};
 
