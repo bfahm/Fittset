@@ -122,6 +122,10 @@ public class DetailsFragment extends Fragment{
                 if(direction == 8){
                     exerciseViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
                     Toast.makeText(getActivity(), "Exercise Deleted", Toast.LENGTH_LONG).show();
+                }else{
+                    //Swiped in the other direction
+                    View currentItem = recyclerView.findViewHolderForAdapterPosition(viewHolder.getAdapterPosition()).itemView;
+                    currentItem.findViewById(R.id.inflator_details_new_best).setVisibility(View.INVISIBLE);
                 }
             }
 
