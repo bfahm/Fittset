@@ -3,17 +3,27 @@ package com.xencosworks.fittset;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xencosworks.fittset.Room.Exercise;
 import com.xencosworks.fittset.Room.ExerciseViewModel;
@@ -79,6 +89,7 @@ public class DetailsFragment extends Fragment{
         recyclerView.setAdapter(adapter);
 
         exerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+        initializeFancyRecyclerView();
         //------------------------------------------------------------------------------------------
 
         noSelectionView = view.findViewById(R.id.empty_view_no_selection);
@@ -93,6 +104,64 @@ public class DetailsFragment extends Fragment{
                 startActivity(intent);
             }
         });
+    }
+
+    private void initializeFancyRecyclerView() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Log.v(LOGTAG, ""+direction);
+                if(direction == 8){
+                    exerciseViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
+                    Toast.makeText(getActivity(), "Exercise Deleted", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
+                                    @NonNull RecyclerView.ViewHolder viewHolder,
+                                    float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                try {
+                    Bitmap icon;
+                    if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                        View itemView = viewHolder.itemView;
+                        //Limit the swipe position
+                        float limitXaxis = dX / 3;
+                        itemView.setTranslationX(limitXaxis);
+
+                        float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                        float width = height / 50;
+
+                        Paint backgroundColor = new Paint();
+                        backgroundColor.setColor(Color.parseColor("#D32F2F"));
+
+                        Paint foregroundText = new Paint();
+                        foregroundText.setColor(Color.parseColor("#FFFFFF"));
+                        foregroundText.setTextSize(60);
+
+                        RectF background = new RectF((float) itemView.getRight() + limitXaxis,
+                                (float) itemView.getTop(),
+                                (float) itemView.getRight(),
+                                (float) itemView.getBottom()); //Background dimensions
+
+                        c.drawRect(background, backgroundColor);
+
+                        c.drawText("NEW BEST", itemView.getRight() - 370,
+                                (float)(itemView.getTop() + itemView.getHeight() / 1.75), foregroundText);
+                    } else {
+                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     //Reset the state of the fragment to default

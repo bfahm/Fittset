@@ -29,15 +29,15 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
     public void onBindViewHolder(@NonNull ExerciseHolder exerciseHolder, int position) {
         Exercise currentExercise = exercises.get(position);
         exerciseHolder.exerciseTitle.setText(currentExercise.getExerciseName());
-        exerciseHolder.exerciseSubtitle.setText(currentExercise.getMuscleGroup()+"");
-        exerciseHolder.exerciseMaxWeight.setText(currentExercise.getMaxWeight()+"");
-        exerciseHolder.exerciseLastWeight.setText(currentExercise.getLastWeight()+"");
+        exerciseHolder.exerciseSubtitle.setText("Custom Routine");
+        exerciseHolder.exerciseMaxWeight.setText(currentExercise.getMaxWeight()+" KG");
+        exerciseHolder.exerciseLastWeight.setText(currentExercise.getLastWeight()+" KG");
+        exerciseHolder.exerciseNewBest.setVisibility(View.VISIBLE);
         //TODO: View the right data, this is temporary just for testing
     }
 
     @Override
     public int getItemCount() {
-        Log.v("-------------------", exercises.size()+"");
         return exercises.size();
     }
 
@@ -46,12 +46,17 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
         notifyDataSetChanged(); //TODO: Change Later, this doesn't have animations and lots of features.
     }
 
+    public Exercise getNoteAt(int position){
+        return exercises.get(position);
+    }
+
 
     class ExerciseHolder extends RecyclerView.ViewHolder{
         private TextView exerciseTitle;
         private TextView exerciseSubtitle;
         private TextView exerciseMaxWeight;
         private TextView exerciseLastWeight;
+        private View exerciseNewBest;
 
         public ExerciseHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +64,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
             exerciseSubtitle = itemView.findViewById(R.id.inflator_details_custom_routine);
             exerciseMaxWeight = itemView.findViewById(R.id.inflator_details_max_weight);
             exerciseLastWeight = itemView.findViewById(R.id.inflator_details_last_weight);
+            exerciseNewBest = itemView.findViewById(R.id.inflator_details_new_best);
         }
     }
 }

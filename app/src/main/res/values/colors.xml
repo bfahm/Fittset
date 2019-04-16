@@ -24,4 +24,6 @@
     <color name="colorNavChipsNotSelected">#8f8f8f</color>
 
     <color name="colorTabUnselected">#9FFFFFFF</color>
+
+    <color name="colorNewBest">#D32F2F</color>
 </resources>

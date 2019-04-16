@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Exercise.class}, version = 3)
+@Database(entities = {Exercise.class}, version = 1)
 public abstract class MainDatabase extends RoomDatabase {
 
 

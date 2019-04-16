@@ -16,6 +16,7 @@ import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.xencosworks.fittset.Room.Exercise;
 import com.xencosworks.fittset.Room.ExerciseViewModel;
@@ -101,6 +102,9 @@ public class AllExercises extends AppCompatActivity implements DrawerLayout.Draw
             case R.id.action_allex_dummy_shoulders:
                 exerciseViewModel.insert(dummyShoulder);
                 return true;
+            case R.id.action_allex_delete_all:
+                exerciseViewModel.deleteAllExercises();
+                Toast.makeText(this, "All Exercises Deleted", Toast.LENGTH_LONG).show();
             default:
                 return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
         }

@@ -17,22 +17,21 @@
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
             android:background="@android:color/white"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp">
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_details_drag"
                 android:layout_gravity="center"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp"
+                android:padding="20dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,8 +55,11 @@
                 android:layout_weight="1"/>
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:paddingRight="16dp"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -82,6 +84,12 @@
                     android:id="@+id/inflator_details_last_weight"/>
 
             </LinearLayout>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorNewBest"
+                android:visibility="invisible"
+                android:id="@+id/inflator_details_new_best"/>
 
         </LinearLayout>
 
