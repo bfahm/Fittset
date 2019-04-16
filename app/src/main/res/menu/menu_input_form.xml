@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_dash_settings"
-        android:title="Settings"
+        android:id="@+id/action_input_delete_exercise"
+        android:title="Delete Exercise"
         app:showAsAction="never"/>
-
 
 </menu>

@@ -346,9 +346,16 @@ public class InputForm extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 finish();
                 return true;
+            case R.id.action_input_delete_exercise:
+                Exercise exercise = new Exercise(null, null, 0, 0, 0, 0, 0, 0);
+                exercise.setId(intent.getIntExtra(EXTRA_ID, -1));
+                exerciseViewModel.delete(exercise);
+                Toast.makeText(this, "Deleted this exercise", Toast.LENGTH_LONG).show();
+                finish();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
