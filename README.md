@@ -1,7 +1,12 @@
 # Fittset
 ### Training companion and note taking application.
-Application is still under construnction and further additions.
-### Next Target(s) - in the next master merge:
+An android application for saving data about your workout in a stylish and intuitive way instead of using a regular note taking application.
+
+**Currently:** the application supports all the CRUD operations and can sort exercises depending on muscle group only. Custom Routines to be added in the next update.
+
+*Application is still under construction and further additions.*
+
+#### Next Target(s) - in the next master merge:
 
  - Keep log of all exercises inserted/updated in a new table for later usage of statistical graphs and workout history
   
