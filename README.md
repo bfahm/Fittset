@@ -40,3 +40,7 @@ Screenshots:
 |![enter image description here](https://i.imgur.com/k9yCUS7.png) | ![enter image description here](https://i.imgur.com/zkTERtz.png)| ![enter image description here](https://i.imgur.com/rMIciO4.png)|:-------------------------:|:-------------------------:|:-------------------------:|
 |![enter image description here](https://i.imgur.com/CsAaiyF.png)|![enter image description here](https://i.imgur.com/8hm2Bjb.png)|![enter image description here](https://i.imgur.com/housWPi.png)
 |![enter image description here](https://i.imgur.com/iX55Tsc.png)|`Placeholder for another screenshot`|`Placeholder for another screenshot`
+
+Currently used architecture diagram:
+![enter image description here](https://i.imgur.com/BDs3PyG.png)
+*Image courtsey of Youtube Channel: Coding in Flow.*
